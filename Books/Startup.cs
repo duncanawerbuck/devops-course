@@ -1,5 +1,6 @@
 ﻿using Books.Controllers;
 using Books.Services;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json.Serialization;
 using Owin;
@@ -17,6 +18,8 @@ namespace Books
     {
         public void Configuration(IAppBuilder app)
         {
+            TelemetryConfiguration.Active.InstrumentationKey = ConfigurationManager.AppSettings["InstrumentationKey"];
+
             // Allow CORS
             app.UseCors(CorsOptions.AllowAll);
 

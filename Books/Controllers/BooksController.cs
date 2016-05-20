@@ -1,5 +1,6 @@
 ﻿using Books.Model;
 using Books.Services;
+using Microsoft.ApplicationInsights;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -26,6 +27,9 @@ namespace Books.Controllers
         public async Task<IEnumerable<Book>> Get()
         {
             var numberOfBooks = new Random().Next(this.options.MinimumNumberOfBooks, this.options.MaximumNumberOfBooks + 1);
+
+            var telemetryClient = new TelemetryClient();
+            telemetryClient.TrackEvent($"Generating {numberOfBooks} books");
 
             var result = new Book[numberOfBooks];
             for (var i = 0; i < numberOfBooks; i++)
